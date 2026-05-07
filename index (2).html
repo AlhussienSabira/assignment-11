@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #02b7ff;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background: rgba(183, 194, 243, 0.459);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Welcome TO GDG</h2>
+
+    <p>Your email:</p>
+    <h3 id="userEmail"></h3>
+
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+    
+    var email = localStorage.getItem("email");
+
+    if (email) {
+        document.getElementById("userEmail").innerText = email;
+    } else {
+        
+        window.location.href = "page1.html";
+    }
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "page1.html";
+    }
+</script>
+
+</body>
+</html>

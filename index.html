@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login System</title>
+
+    <style>
+        body {
+            height:100vh;
+            margin:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            overflow:hidden;
+        }
+
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .box {
+            width:380px;
+            padding:35px;
+            background:rgba(255,255,255,0.15);
+            backdrop-filter:blur(12px);
+            border-radius:25px;
+            border:1px solid rgba(255, 255, 255, 0.26);
+            text-align:center;
+            color:white;
+        }
+
+        input {
+            width:100%;
+            padding:14px;
+            margin:10px 0;
+            border:none;
+            border-radius:15px;
+            outline:none;
+            font-size:16px;
+        }
+
+        button {
+            width:100%;
+            padding:14px;
+            margin-top:15px;
+            background:transparent;
+            border:2px solid rgba(255,255,255,0.6);
+            border-radius:20px;
+            color:white;
+            font-size:18px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        span {
+            color: blue;
+            cursor: pointer;
+        }
+
+        .msg {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .error {
+            background-color: #ffd6d6;
+            color: #900;
+        }
+
+        .success {
+            background-color: #d6ffd6;
+            color: #060;
+        }
+
+        #signup {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<video autoplay muted loop id="bg-video"  src="https://template.canva.com/EAFEj_AqWLg/1/document_1440w-hRtHMAMt94E.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUH7DHWAQDT%2F20260507%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260507T061437Z&X-Amz-Expires=49789&X-Amz-Signature=561482744e8bd3e29a89ed2acb8040d0f3b5d86ba946d2862f2796d6d1859707&X-Amz-SignedHeaders=host%3Bx-amz-expected-bucket-owner&response-expires=Thu%2C%2007%20May%202026%2020%3A04%3A26%20GMT">
+   
+</video>
+
+<div class="box" id="login">
+    <h3>Smart Login System</h3>
+
+    <input type="email" id="email" placeholder="Enter your email">
+    <input type="password" id="password" placeholder="Enter your password">
+
+    <div id="loginMsg" class="msg"></div>
+
+    <button onclick="login()">Login</button>
+
+    <p>
+        You have an account?
+        <span onclick="goSignup()">sign up</span>
+    </p>
+</div>
+
+<div class="box" id="signup">
+    <h3>Sign Up</h3>
+
+    <input type="email" id="newEmail" placeholder="Enter your email">
+    <input type="password" id="newPassword" placeholder="Enter your password">
+
+    <div id="signupMsg" class="msg"></div>
+
+    <button onclick="signup()">Sign Up</button>
+
+    <p>
+        have account ?
+        <span onclick="goLogin()">login</span>
+    </p>
+</div>
+
+<script>
+    function showMsg(id, text, type) {
+        var msg = document.getElementById(id);
+        msg.innerText = text;
+        msg.className = "msg " + type;
+        msg.style.display = "block";
+    }
+
+    function clearMsg(id) {
+        document.getElementById(id).style.display = "none";
+    }
+
+    function goSignup() {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("signup").style.display = "block";
+    }
+
+    function goLogin() {
+        document.getElementById("signup").style.display = "none";
+        document.getElementById("login").style.display = "block";
+    }
+
+    function signup() {
+        clearMsg("signupMsg");
+
+        var e = document.getElementById("newEmail").value;
+        var p = document.getElementById("newPassword").value;
+
+        if (e === "" || p === "") {
+            showMsg("signupMsg", "Please enter email and password ❌", "error");
+        } else {
+            localStorage.setItem("email", e);
+            localStorage.setItem("pass", p);
+            showMsg("signupMsg", "Account created successfully ✅", "success");
+        }
+    }
+
+    function login() {
+        clearMsg("loginMsg");
+
+        var e = document.getElementById("email").value;
+        var p = document.getElementById("password").value;
+
+        var se = localStorage.getItem("email");
+        var sp = localStorage.getItem("pass");
+
+        if (e === "" || p === "") {
+            showMsg("loginMsg", "Please enter email and password ❌", "error");
+        } else if (e === se && p === sp) {
+            showMsg("loginMsg", "Login successful ✅", "success");
+
+
+            setTimeout(function() {
+                window.location.href = "page2.html";
+            }, 500);
+            
+        } else {
+            showMsg("loginMsg", "Invalid email or password ❌", "error");
+        }
+    }
+</script>
+
+</body>
+</html>
